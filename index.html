@@ -212,19 +212,19 @@
   <div class="card">
     <div class="form-wrap">
       <div class="grid">
-        <div class="lab">LSM:kPa</div>
+        <div class="lab">LSM:</div>
         <div class="input-row">
           <input id="LSM" type="number" step="any" placeholder="Enter LSM">
           <div class="unit">kPa</div>
         </div>
 
-        <div class="lab">TCS:mm</div>
+        <div class="lab">TCS:</div>
         <div class="input-row">
           <input id="TCS" type="number" step="any" placeholder="Enter TCS">
           <div class="unit">mm</div>
         </div>
 
-        <div class="lab">APTT:s</div>
+        <div class="lab">APTT:</div>
         <div class="input-row">
           <input id="APTT" type="number" step="any" placeholder="Enter APTT">
           <div class="unit">s</div>
@@ -238,7 +238,6 @@
 
       <div class="result" id="resultBox">P =</div>
       <div class="hint">
-        Model: P = 1 / (1 + exp(-z)), z = 0.077·LSM - 0.819·TCS - 0.079·APTT + 3.280
       </div>
     </div>
   </div>
