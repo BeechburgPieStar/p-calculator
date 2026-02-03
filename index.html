@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>P 计算器</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Arial; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 18px; }
+    label { display: block; margin-top: 12px; }
+    input { width: 100%; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 10px; }
+    button { margin-top: 16px; padding: 10px 14px; font-size: 16px; border: 0; border-radius: 10px; cursor: pointer; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .out { margin-top: 16px; font-size: 18px; }
+    .small { color: #666; font-size: 13px; margin-top: 8px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1>P 计算器</h1>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label for="lsm">LSM</label>
+        <input id="lsm" type="number" step="any" placeholder="例如 10.5" />
+      </div>
+      <div>
+        <label for="tcs">TCS</label>
+        <input id="tcs" type="number" step="any" placeholder="例如 2" />
+      </div>
+    </div>
+
+    <label for="aptt">APTT</label>
+    <input id="aptt" type="number" step="any" placeholder="例如 30" />
+
+    <button id="calc">计算 P</button>
+
+    <div class="out" id="result">P = </div>
+    <div class="small">
+      公式：P = 1 / (1 + exp(-z))，z = 0.077·LSM - 0.819·TCS - 0.079·APTT + 3.280
+    </div>
+  </div>
+
+  <script>
+    function toNumber(id) {
+      const v = document.getElementById(id).value;
+      return v === "" ? NaN : Number(v);
+    }
+
+    document.getElementById("calc").addEventListener("click", () => {
+      const LSM = toNumber("lsm");
+      const TCS = toNumber("tcs");
+      const APTT = toNumber("aptt");
+
+      if (![LSM, TCS, APTT].every(Number.isFinite)) {
+        document.getElementById("result").textContent = "请输入有效的数字（LSM、TCS、APTT 都不能为空）";
+        return;
+      }
+
+      const z = 0.077 * LSM - 0.819 * TCS - 0.079 * APTT + 3.280;
+      const P = 1 / (1 + Math.exp(-z));
+
+      document.getElementById("result").textContent =
+        "P = " + P.toFixed(6) + "   （z = " + z.toFixed(6) + "）";
+    });
+  </script>
+</body>
+</html>
