@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Non-invasive Predictive Model</title>
+  <title>Non-invasive Predictor of Early Liver Transplantation Risk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -16,6 +16,11 @@
       --card:#ffffff;
       --shadow: 0 8px 28px rgba(17,24,39,.06);
       --radius: 14px;
+      --danger:#ef4444;
+      --danger-soft: rgba(239,68,68,.06);
+      --danger-border: rgba(239,68,68,.18);
+      --ok-soft: rgba(59,130,246,.06);
+      --ok-border: rgba(59,130,246,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -40,17 +45,17 @@
     }
 
     .h1{
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 700;
-      color: var(--blue);
+      color: #111827;
       line-height: 1.25;
     }
 
     .h2{
-      margin-top: 6px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--muted);
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--blue);
       line-height: 1.35;
     }
 
@@ -72,9 +77,8 @@
       margin-top: 18px;
     }
 
-    /* form area */
     .form-wrap{
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto;
     }
 
@@ -88,7 +92,7 @@
     .lab{
       text-align: right;
       padding-right: 8px;
-      font-weight: 700;
+      font-weight: 800;
       color: #374151;
     }
 
@@ -118,7 +122,7 @@
       min-width: 44px;
       text-align: left;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
       padding-right: 2px;
     }
@@ -138,7 +142,7 @@
       border: 1px solid var(--border);
       background: #fff;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 14px;
     }
 
@@ -156,12 +160,14 @@
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 12px;
-      background: rgba(59,130,246,.06);
-      border: 1px solid rgba(59,130,246,.18);
-      font-size: 16px;
-      font-weight: 800;
+      background: var(--ok-soft);
+      border: 1px solid var(--ok-border);
+      font-size: 15px;
+      font-weight: 900;
       color: var(--blue);
       display: none;
+      line-height: 1.7;
+      white-space: pre-line;
     }
 
     .hint{
@@ -171,7 +177,6 @@
       line-height: 1.6;
     }
 
-    /* text blocks */
     .section-title{
       font-size: 15px;
       font-weight: 900;
@@ -190,10 +195,37 @@
       white-space: pre-line;
     }
 
+    .para small{
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .legal{
+      font-size: 13.8px;
+      line-height: 1.75;
+      color: #111827;
+      white-space: pre-line;
+    }
+
+    .legal b{
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .footer-note{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
     @media (max-width: 820px){
       .grid{ grid-template-columns: 1fr; }
       .lab{ text-align: left; padding-right: 0; }
       .form-wrap{ max-width: 100%; }
+      .h1{ font-size: 16px; }
+      .h2{ font-size: 16px; }
     }
   </style>
 </head>
@@ -201,70 +233,115 @@
 <body>
 <header>
   <div class="header-inner">
-    <div class="h1">Children's Hospital of Nanjing Medical University</div>
-    <div class="h2">Non-invasive Predictive Model for Early Liver Transplantation in Biliary Atresia</div>
+    <div class="h1">Children’s Hospital of Nanjing Medical University</div>
+    <div class="h2">Non-invasive Predictor of Early Liver Transplantation Risk for Patients With Biliary Atresia</div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- calculator -->
   <div class="card">
     <div class="form-wrap">
       <div class="grid">
-        <div class="lab">LSM:</div>
+        <div class="lab">Liver Stiffness Measurement (LSM):</div>
         <div class="input-row">
-          <input id="LSM" type="number" step="0.01" placeholder="Enter LSM" oninput="limitTwoDecimals(this)">
+          <input id="LSM" type="number" min="0" step="0.01" placeholder="Enter LSM" inputmode="decimal" oninput="sanitizeNumber(this)">
           <div class="unit">kPa</div>
         </div>
 
-        <div class="lab">TCS:</div>
+        <div class="lab">Triangular Cord Sign (TCS):</div>
         <div class="input-row">
-          <input id="TCS" type="number" step="0.01" placeholder="Enter TCS" oninput="limitTwoDecimals(this)">
+          <input id="TCS" type="number" min="0" step="0.01" placeholder="Enter TCS" inputmode="decimal" oninput="sanitizeNumber(this)">
           <div class="unit">mm</div>
         </div>
 
-        <div class="lab">APTT:</div>
+        <div class="lab">Activated Partial Thromboplastin Time (APTT):</div>
         <div class="input-row">
-          <input id="APTT" type="number" step="0.01" placeholder="Enter APTT" oninput="limitTwoDecimals(this)">
+          <input id="APTT" type="number" min="0" step="0.01" placeholder="Enter APTT" inputmode="decimal" oninput="sanitizeNumber(this)">
           <div class="unit">s</div>
         </div>
 
         <div class="actions">
-          <button class="primary" id="btnCalc">calculate</button>
-          <button id="btnReset">resetting</button>
+          <button class="primary" id="btnCalc" type="button">Calculate</button>
+          <button id="btnReset" type="button">Reset</button>
         </div>
       </div>
 
       <div class="result" id="resultBox">P =</div>
-      <div class="hint"></div>
+      <div class="hint">
+        Enter non-negative values. Results are for research reference only and do not replace clinical judgment.
+      </div>
     </div>
   </div>
 
-  <!-- Background -->
   <div class="card">
-    <div class="section-title">background</div>
+    <div class="section-title">Background</div>
     <p class="para">
-When an infant is diagnosed with biliary atresia, it remains challenging to determine preoperatively whether the Kasai procedure or direct liver transplantation is more beneficial for their treatment. To address this dilemma, we aim to identify non-invasive indicators and develop a predictive model to stratify high-risk patients who require early liver transplantation (within one year after the Kasai procedure).
+When an infant is diagnosed with biliary atresia, it remains challenging to determine preoperatively whether the Kasai procedure or direct liver transplantation is more beneficial. This project aims to identify non-invasive clinical indicators and develop a predictive model to stratify high-risk patients who are likely to require early liver transplantation within one year after undergoing the Kasai procedure.
     </p>
   </div>
 
-  <!-- Model description -->
   <div class="card">
-    <div class="section-title">model description</div>
+    <div class="section-title">Model Description</div>
     <p class="para">
-We selected three non-invasive indicators—LSM, TCS, and APTT—and developed a nomogram prediction model, which effectively predicts high-risk children requiring early liver transplantation for biliary atresia
+We selected three non-invasive indicators, namely Liver Stiffness Measurement (LSM), Triangular Cord Sign (TCS), and Activated Partial Thromboplastin Time (APTT), and developed a predictive model based on logistic regression.
     </p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Explanation of the P Value</div>
+    <p class="para">
+The P value represents the probability of early liver transplantation risk calculated by the logistic regression model. Its value ranges from 0 to 1. A higher value indicates a greater likelihood that the patient will require early liver transplantation.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Copyright Statement</div>
+    <div class="legal">
+<b>1. Copyright Ownership</b>
+All intellectual property rights of this web-based model, titled “Non-invasive Predictor of Early Liver Transplantation Risk for Patients With Biliary Atresia” (the Model), including but not limited to the model algorithms, source code, web content, visual interface, and related textual descriptions, are owned by the Department of Pediatric Surgery and the Department of Ultrasound Medicine, Children’s Hospital of Nanjing Medical University. The Model is protected by the Copyright Law of the People’s Republic of China, the Regulations on Computer Software Protection, and relevant international intellectual property treaties.
+
+<b>2. License for Use</b>
+Non-commercial use: Individuals, research institutions, or non-profit organizations may use the Model free of charge for scientific exploration, academic research, and educational demonstration purposes, provided that the copyright ownership and source of the Model are clearly acknowledged. The Model may not be used for any commercial activities, including but not limited to paid assessments, product development, or commercial promotion.
+Commercial use: Enterprises or commercial organizations must submit a written application to the copyright holders in advance and obtain explicit commercial authorization before use. Specific licensing terms shall be negotiated separately.
+
+<b>3. Prohibited Activities</b>
+Without prior written permission, no organization or individual may copy, modify, translate, adapt, reverse engineer, decompile, or disassemble the Model’s algorithms or code; publish or distribute the Model in whole or in part on other platforms in any form including mirroring, embedding, or linking; use prediction results for misleading publicity or false medical promotion; or transfer, license, or pledge the Model’s intellectual property rights to any third party.
+
+<b>4. Disclaimer</b>
+The Model is a predictive tool developed based on research data and algorithms. Its results are for reference only and cannot replace professional medical diagnosis or treatment advice. The copyright holders shall not be liable for any direct or indirect losses arising from the use of the Model, including but not limited to medical decision-making errors caused by deviations in prediction results.
+
+<b>5. Additional Provisions</b>
+The copyright holders reserve the right to update, modify, suspend, or terminate the Model and its services at any time without prior notice. The final interpretation of this statement rests with the Department of Pediatric Surgery and the Department of Ultrasound Medicine, Children’s Hospital of Nanjing Medical University. Any matters not covered herein shall be subject to supplementary statements issued by the copyright holders.
+
+<div class="footer-note">
+Copyright Holders: Department of Pediatric Surgery and Department of Ultrasound Medicine, Children’s Hospital of Nanjing Medical University
+Date: February 5, 2026
+Contact: twbcn@njmu.edu.cn
+</div>
+    </div>
   </div>
 
 </div>
 
 <script>
-  function limitTwoDecimals(el){
-    if(el.value.includes(".")){
-      const parts = el.value.split(".");
-      el.value = parts[0] + "." + parts[1].slice(0, 2);
+  function sanitizeNumber(el){
+    let v = String(el.value || "");
+
+    v = v.replace(/[^\d.]/g, "");
+    const firstDot = v.indexOf(".");
+    if (firstDot !== -1) {
+      v = v.slice(0, firstDot + 1) + v.slice(firstDot + 1).replace(/\./g, "");
     }
+
+    if (v.includes(".")) {
+      const parts = v.split(".");
+      v = parts[0] + "." + (parts[1] || "").slice(0, 2);
+    }
+
+    if (v.startsWith(".")) v = "0" + v;
+
+    el.value = v;
   }
 
   function num(id){
@@ -282,6 +359,12 @@ We selected three non-invasive indicators—LSM, TCS, and APTT—and developed a
     return { P, z };
   }
 
+  function riskText(p){
+    if (p >= 0.7) return "Risk tier: Higher estimated risk (research reference only).";
+    if (p >= 0.3) return "Risk tier: Intermediate estimated risk (research reference only).";
+    return "Risk tier: Lower estimated risk (research reference only).";
+  }
+
   document.getElementById("btnCalc").addEventListener("click", () => {
     const LSM = round2(num("LSM"));
     const TCS = round2(num("TCS"));
@@ -289,12 +372,15 @@ We selected three non-invasive indicators—LSM, TCS, and APTT—and developed a
 
     const box = document.getElementById("resultBox");
 
-    if (![LSM, TCS, APTT].every(Number.isFinite)) {
+    const allFinite = [LSM, TCS, APTT].every(Number.isFinite);
+    const allNonNeg = [LSM, TCS, APTT].every(v => v >= 0);
+
+    if (!allFinite || !allNonNeg) {
       box.style.display = "block";
-      box.style.color = "#ef4444";
-      box.style.background = "rgba(239,68,68,.06)";
-      box.style.borderColor = "rgba(239,68,68,.18)";
-      box.textContent = "Please enter valid numeric values for LSM, TCS and APTT.";
+      box.style.color = "var(--danger)";
+      box.style.background = "var(--danger-soft)";
+      box.style.borderColor = "var(--danger-border)";
+      box.textContent = "Please enter valid non-negative numeric values for LSM, TCS, and APTT.";
       return;
     }
 
@@ -302,9 +388,12 @@ We selected three non-invasive indicators—LSM, TCS, and APTT—and developed a
 
     box.style.display = "block";
     box.style.color = "var(--blue)";
-    box.style.background = "rgba(59,130,246,.06)";
-    box.style.borderColor = "rgba(59,130,246,.18)";
-    box.textContent = "P = " + out.P.toFixed(6);
+    box.style.background = "var(--ok-soft)";
+    box.style.borderColor = "var(--ok-border)";
+    box.textContent =
+      "P = " + out.P.toFixed(6) + "\n" +
+      "Logit(z) = " + out.z.toFixed(3) + "\n" +
+      riskText(out.P);
   });
 
   document.getElementById("btnReset").addEventListener("click", () => {
